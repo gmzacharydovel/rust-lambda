@@ -3,8 +3,6 @@ use crate::jwks::Jwks;
 use aws_sdk_s3::Client as S3Client;
 use lambda_http::{Body, Error as UnknownError, Request, RequestExt, Response as HttpResponse};
 use reqwest::Client as HttpClient;
-use std::cell::RefCell;
-use std::sync::RwLock;
 
 pub(crate) struct State<'a> {
     pub s3: &'a S3Client,
@@ -32,7 +30,7 @@ pub(crate) async fn function_handler<'a>(
     event: Request,
     state: &State<'a>,
 ) -> Result<FunctionHandlerReturn, UnknownError> {
-    let auth = authenticate(&event, &state.http, &state.s3, &state.cognito).await?;
+    let auth = authenticate(&event, state.http, state.s3, &state.cognito).await?;
 
     // Extract some useful information from the request
     let who = event

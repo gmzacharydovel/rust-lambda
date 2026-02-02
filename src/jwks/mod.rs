@@ -1,5 +1,5 @@
 use crate::{
-    cognito::{self, CognitoConfig},
+    cognito::CognitoConfig,
     jwks::s3::{get_jwks_object, put_jwks_object},
 };
 use aws_sdk_s3::Client as S3Client;

@@ -5,7 +5,6 @@ use http_handler::{function_handler, FunctionHandlerReturn, State};
 use lambda_http::{run, service_fn, tracing, Error};
 use lambda_http::{Body, Error as UnknownError, Response as HttpResponse};
 use reqwest::Client as HttpClient;
-use std::cell::RefCell;
 use std::env;
 use tokio::sync::RwLock;
 
@@ -27,7 +26,7 @@ async fn main() -> Result<(), Error> {
         cognito: CognitoConfig {
             user_pool_id: env::var("AWS_COGNITO_USER_POOL_ID")?,
             client_id: env::var("AWS_COGNITO_CLIENT_ID")?,
-            region: "ap-northeast-1".to_string(),
+            region: env::var("AWS_COGNITO_REGION")?,
             jwks: None,
         },
     });

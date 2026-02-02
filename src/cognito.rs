@@ -4,6 +4,7 @@ use jsonwebtoken::{Algorithm, DecodingKey, Validation};
 use lambda_http::{Error as UnknownError, Request};
 use reqwest::Client as HttpClient;
 
+#[allow(dead_code)]
 pub(crate) struct AuthenticateReturnType {
     pub jwks: Jwks,
     pub claims: Claims,
@@ -47,14 +48,4 @@ pub(crate) struct CognitoConfig {
     pub user_pool_id: String,
     pub region: String,
     pub jwks: Option<Jwks>,
-}
-
-pub(crate) trait JwksSetter {
-    fn set_jwks(&mut self, jwks: Jwks) -> ();
-}
-
-impl JwksSetter for CognitoConfig {
-    fn set_jwks(&mut self, jwks: Jwks) {
-        self.jwks = Some(jwks);
-    }
 }
