@@ -1,10 +1,7 @@
 build:
-	ulimit -n 4096 && cargo lambda build --arm64
+	ulimit -n 4096 && cargo lambda build --arm64 --release
 
-deploy:
-	cargo lambda deploy
-
-clean:
+distclean:
 	rm -r target
 	rm -r src/target
 
