@@ -7,3 +7,7 @@ deploy:
 clean:
 	rm -r target
 	rm -r src/target
+
+deploy: build
+	cargo lambda deploy --env-var AWS_COGNITO_CLIENT_ID=${AWS_COGNITO_CLIENT_ID},AWS_COGNITO_USER_POOL_ID=${AWS_COGNITO_USER_POOL_ID},AWS_COGNITO_REGION=${AWS_COGNITO_REGION}
+
