@@ -7,7 +7,7 @@ const authorization = config.headers.Authorization;
 console.log(authorization);
 
 const start = performance.now();
-const response = await fetch("https://71bs55wjyl.execute-api.ap-northeast-1.amazonaws.com/hello", {
+const response = await fetch("https://p7vtih0jq1.execute-api.ap-northeast-1.amazonaws.com/hello", {
   headers: {
     Authorization: authorization
   }
