@@ -22,3 +22,8 @@ lto = true              # Enable Link Time Optimization
 codegen-units = 1       # Reduce parallel code generation units
 panic = "abort"         # Abort on panic (smaller binary)
 strip = true            # Strip symbols from binary
+
+[[bin]]
+name = "fetch"
+path = "scripts/fetch.rs"
+
