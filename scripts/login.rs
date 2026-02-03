@@ -23,11 +23,8 @@ fn main() {
         &format!("USERNAME=\"{username}\",PASSWORD=\"{password}\""),
     ]);
     let args = command.get_args();
-    println!("{:?}", args);
     let content = command.output().unwrap();
     let response = String::from_utf8(content.stdout).unwrap();
     let mut file = File::create(".authentication.json").unwrap();
     file.write_all(response.as_bytes()).unwrap();
-
-    //println!("{}", output.unwrap().stdout);
 }
