@@ -14,6 +14,7 @@ async fn main() {
         .await
         .unwrap();
     let duration = start.elapsed();
-    print!("Duration: {duration:?}\n");
-    print!("Response: {response}\n");
+
+    println!("Duration: {duration:?}");
+    println!("Response: {response}");
 }

@@ -27,3 +27,7 @@ strip = true            # Strip symbols from binary
 name = "fetch"
 path = "scripts/fetch.rs"
 
+
+[[bin]]
+name = "login"
+path = "scripts/login.rs"

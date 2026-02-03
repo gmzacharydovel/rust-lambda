@@ -11,3 +11,6 @@ deploy: build
 
 fetch:
 	cargo run --bin fetch
+
+login:
+	cargo run --bin login
