@@ -7,6 +7,8 @@ use aws_sdk_s3::operation::{
 use aws_sdk_s3::primitives::ByteStream;
 use aws_smithy_types::body::SdkBody;
 
+const JWKS_BUCKET: &str = "aaaaaa-jwks";
+
 #[allow(dead_code)]
 #[derive(Debug)]
 pub enum PutJwksObjectError {
@@ -34,7 +36,7 @@ pub async fn put_jwks_object(
     let stream = ByteStream::new(SdkBody::from(as_string));
     let object = client
         .put_object()
-        .bucket("jwks")
+        .bucket(JWKS_BUCKET)
         .key("jwks.json")
         .body(stream)
         .send()
@@ -79,7 +81,7 @@ impl From<serde_json::Error> for GetJwksObjectError {
 pub async fn get_jwks_object(client: &aws_sdk_s3::Client) -> Result<Jwks, GetJwksObjectError> {
     let object = client
         .get_object()
-        .bucket("jwks")
+        .bucket(JWKS_BUCKET)
         .key("jwks.json")
         .send()
         .await?;

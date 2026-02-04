@@ -11,7 +11,7 @@ pub(crate) struct AuthenticateReturnType {
 }
 
 pub async fn authenticate(
-    _event: &Request,
+    event: &Request,
     http: &HttpClient,
     s3: &S3Client,
     cognito: &CognitoConfig,
@@ -20,7 +20,14 @@ pub async fn authenticate(
     let cognito_client_id = &cognito.client_id;
     let cognito_user_pool_id = &cognito.user_pool_id;
     let cognito_region = &cognito.region;
-    let token = "eyJraWQiOiI0UDJZKzl3Q1pZZUZCWFJuZXJ1bGhNenVaQTlkcnVDbUZxMVk1XC9Jd0lIdz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI5NzA0NmFlOC03MDYxLTcwYTQtNDEwOC0zOGMxNDc0ZGY3MWYiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLW5vcnRoZWFzdC0xLmFtYXpvbmF3cy5jb21cL2FwLW5vcnRoZWFzdC0xX1FaMjVmM3JKeiIsImNvZ25pdG86dXNlcm5hbWUiOiI5NzA0NmFlOC03MDYxLTcwYTQtNDEwOC0zOGMxNDc0ZGY3MWYiLCJvcmlnaW5fanRpIjoiZjYzZGYzOTQtNTczNi00OTJiLTg3MmMtYzU4YzJkNzU0MGMyIiwiYXVkIjoiNGhzMDBzczY1bzV0ZWNsMjJnZ3JlMDRzODMiLCJldmVudF9pZCI6ImZhYmY2ZjJlLTBiZGItNDIxYy1iYTA4LWU0NTIwY2U0YTU2NyIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzY5NzEwMDAwLCJleHAiOjE3Njk3MTM2MDAsImlhdCI6MTc2OTcxMDAwMCwianRpIjoiZDhiNmZkMGMtOWM4ZS00ZWI5LTljNmQtOTNkOGU1OGI3Mjg5IiwiZW1haWwiOiJ6YWNoYXJ5LmRvdmVsQGdyYW5tYW5pYnVzLmNvbSJ9.yFDecNG7zyOnCHILjyLdbUxAHiu3nS5a9SmJh8vp5wmI7DTjtEdx9hVc9dFThExUoDoi0kAODzg7WzJ_D14GPVj5FprVoxTkcwcwHt8aK9VcVuMVjGqnXgtyxOeVu5vzpiEO80Q-bcFHrp7zQnag6Y0CaaILIY7oKd-jPGvc74k8tG0B9jiuk35IbyMMngEfCR-Ubg9d_HPztgCE0icEZ-EEalh2OQ2lhipKRh4FhSPkWkDzV5IVC9oqSMmoraw0jbDOG1k6aflVnVA2bAVbee_SiGkUeIeAxUjyIr6xfv-osVQrhiinklnuDbAJJkpxpePMsOIZJy7NpmKIK0TgMg";
+
+    let token = &event
+        .headers()
+        .get("authorization")
+        .unwrap()
+        .to_str()
+        .unwrap()["Bearer ".len()..];
+    print!("token {}", token);
     let header = jsonwebtoken::decode_header(token)?;
     let kid = header.kid.unwrap();
     let JwksResult {
